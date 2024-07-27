@@ -1,154 +1,34 @@
-// src/components/Register.js
 import React, { useState } from 'react';
-import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography, MenuItem } from '@mui/material';
+import sendConfirmationEmail from '../utils/email';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('alumno'); // 'alumno', 'administrador', 'superusuario'
-  const [additionalFields, setAdditionalFields] = useState({});
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('cliente'); // 'administrador', 'cliente', 'aportante'
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
     const formData = {
       email,
       password,
       role,
-      ...additionalFields,
     };
-    // Guardar los datos en una base de datos temporal (localStorage)
     localStorage.setItem('formData', JSON.stringify(formData));
+    const token = Math.random().toString(36).substr(2);
+    sendConfirmationEmail(email, token);
     console.log('Datos guardados:', formData);
   };
 
-  const handleAdditionalFieldChange = (field, value) => {
-    setAdditionalFields({
-      ...additionalFields,
-      [field]: value,
-    });
-  };
-
-  const renderAdditionalFields = () => {
-    switch (role) {
-      case 'alumno':
-        return (
-          <>
-            <Box mb={2}>
-              <TextField
-                label="Nombre"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('nombre', e.target.value)}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                label="Apellido"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('apellido', e.target.value)}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                label="Grado"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('grado', e.target.value)}
-                required
-              />
-            </Box>
-          </>
-        );
-      case 'administrador':
-        return (
-          <>
-            <Box mb={2}>
-              <TextField
-                label="Nombre"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('nombre', e.target.value)}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                label="Apellido"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('apellido', e.target.value)}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                label="Nombre de la Escuela"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('nombreEscuela', e.target.value)}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                label="CUIT de la Escuela"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('cuitEscuela', e.target.value)}
-                required
-              />
-            </Box>
-          </>
-        );
-      case 'superusuario':
-        return (
-          <>
-            <Box mb={2}>
-              <TextField
-                label="Nombre"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('nombre', e.target.value)}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                label="Apellido"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('apellido', e.target.value)}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                label="Organización"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleAdditionalFieldChange('organizacion', e.target.value)}
-                required
-              />
-            </Box>
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      height="100vh"
-      bgcolor="#f0f2f5"
-    >
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh" bgcolor="#f0f2f5" p={3}>
+      <img src="/logo.png" alt="Coopefacil Logo" style={{ marginBottom: '20px' }} />
       <Typography variant="h4" gutterBottom>
         Registrarse
       </Typography>
@@ -176,6 +56,17 @@ const Register = () => {
         </Box>
         <Box mb={2}>
           <TextField
+            label="Confirmar Contraseña"
+            variant="outlined"
+            type="password"
+            fullWidth
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </Box>
+        <Box mb={2}>
+          <TextField
             select
             label="Rol"
             variant="outlined"
@@ -183,13 +74,23 @@ const Register = () => {
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
-            <MenuItem value="alumno">Alumno</MenuItem>
-            <MenuItem value="administrador">Administrador de Escuela</MenuItem>
-            <MenuItem value="superusuario">Superusuario</MenuItem>
+            <MenuItem value="administrador">Administrador de plataforma</MenuItem>
+            <MenuItem value="cliente">Usuario cliente</MenuItem>
+            <MenuItem value="aportante">Usuario aportante</MenuItem>
           </TextField>
         </Box>
-        {renderAdditionalFields()}
-        <Button variant="contained" color="primary" type="submit">
+        <Box mb={2}>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+              required
+            />
+            Acepto las condiciones de uso
+          </label>
+        </Box>
+        <Button variant="contained" color="primary" type="submit" disabled={!acceptedTerms}>
           Registrarse
         </Button>
       </form>

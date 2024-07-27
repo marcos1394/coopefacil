@@ -1,4 +1,3 @@
-// src/components/Payments.js
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 

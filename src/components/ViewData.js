@@ -1,4 +1,3 @@
-// src/components/ViewData.js
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
@@ -6,14 +5,7 @@ const ViewData = () => {
   const formData = JSON.parse(localStorage.getItem('formData'));
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      height="100vh"
-      bgcolor="#f0f2f5"
-    >
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh" bgcolor="#f0f2f5" p={3}>
       <Typography variant="h4" gutterBottom>
         Datos Guardados
       </Typography>

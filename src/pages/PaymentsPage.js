@@ -1,4 +1,3 @@
-// src/pages/PaymentsPage.js
 import React from 'react';
 import Payments from '../components/Payments';
 

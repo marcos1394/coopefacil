@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 
@@ -8,19 +7,11 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica de inicio de sesión aquí
     console.log(`Email: ${email}, Password: ${password}`);
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      height="100vh"
-      bgcolor="#f0f2f5"
-    >
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh" bgcolor="#f0f2f5" p={3}>
       <Typography variant="h4" gutterBottom>
         Iniciar Sesión
       </Typography>

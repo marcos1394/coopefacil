@@ -1,23 +1,59 @@
-// src/components/Dashboard.js
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
-    <Box>
+    <Box p={3}>
       <Typography variant="h4" gutterBottom>
-        Dashboard
+        Panel de Administración
       </Typography>
-      <Box>
-        <Link to="/receipts">Registro de Cobros</Link>
-      </Box>
-      <Box>
-        <Link to="/expenses">Registro de Gastos</Link>
-      </Box>
-      <Box>
-        <Link to="/payments">Registro de Pagos</Link>
-      </Box>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Registro de Cobros</Typography>
+              <Typography variant="body2">Registro de Cobros y Emisión de Comprobantes para Socios</Typography>
+              <Button component={Link} to="/receipts" variant="contained" color="primary">
+                Acceder
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Registro de Gastos</Typography>
+              <Typography variant="body2">Registro de Gastos</Typography>
+              <Button component={Link} to="/expenses" variant="contained" color="primary">
+                Acceder
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Registro de Pagos</Typography>
+              <Typography variant="body2">Registro de Pagos</Typography>
+              <Button component={Link} to="/payments" variant="contained" color="primary">
+                Acceder
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Carrito de Pagos</Typography>
+              <Typography variant="body2">Gestión del carrito de pagos</Typography>
+              <Button component={Link} to="/payment-cart" variant="contained" color="primary">
+                Acceder
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

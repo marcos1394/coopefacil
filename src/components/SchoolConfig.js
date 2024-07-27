@@ -1,6 +1,5 @@
-// src/components/SchoolConfig.js
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, MenuItem } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 const SchoolConfig = ({ onSave }) => {
   const [schoolName, setSchoolName] = useState('');
