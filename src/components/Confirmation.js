@@ -23,7 +23,7 @@ const Confirmation = () => {
             Registro Confirmado
           </Typography>
           <Typography variant="body1" gutterBottom>
-            Tu registro ha sido confirmado exitosamente.
+            Tu registro ha sido confirmado exitosamente. Por favor, acepta las condiciones de uso para continuar.
           </Typography>
           <Button variant="contained" color="primary" href="/login">
             Iniciar Sesión

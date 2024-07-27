@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, MenuItem, FormControl, InputLabel, Select, FormControlLabel, Checkbox } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import sendConfirmationEmail from '../utils/email';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,11 +24,13 @@ const Register = () => {
       role,
       additionalInfo,
       acceptedTerms,
+      acceptanceDate: new Date().toISOString(),
     };
     localStorage.setItem('formData', JSON.stringify(formData));
     const token = Math.random().toString(36).substr(2);
     sendConfirmationEmail(email, token);
-    console.log('Datos guardados:', formData);
+    alert('Se ha enviado un correo de confirmación. Por favor, revisa tu email.');
+    navigate('/confirmation');
   };
 
   return (
