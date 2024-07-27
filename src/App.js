@@ -11,6 +11,7 @@ import ExpensesPage from './pages/ExpensesPage';
 import PaymentsPage from './pages/PaymentsPage';
 import SchoolConfigPage from './pages/SchoolConfigPage';
 import CooperativeDataPage from './pages/CooperativaDataPage';
+import Chat from './components/Chat';
 import theme from './theme';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/school-config" element={<SchoolConfigPage />} />
             <Route path="/cooperative-data" element={<CooperativeDataPage />} />
           </Routes>
+          <Chat />
           <Box display="flex" justifyContent="space-between" p={2} bgcolor="#f0f2f5">
             <Button variant="text" color="primary" href="mailto:consulta@coopefacil.com">
               Enviar Consulta/Reclamo
