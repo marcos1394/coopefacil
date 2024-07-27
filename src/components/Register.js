@@ -10,7 +10,17 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('cliente'); // 'administrador', 'cliente', 'aportante'
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [additionalInfo, setAdditionalInfo] = useState({});
+  const [schoolInfo, setSchoolInfo] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (role === 'cliente') {
+      setSchoolInfo({ ...schoolInfo, [name]: value });
+    } else {
+      setAdditionalInfo({ ...additionalInfo, [name]: value });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +33,7 @@ const Register = () => {
       password,
       role,
       additionalInfo,
+      schoolInfo,
       acceptedTerms,
       acceptanceDate: new Date().toISOString(),
     };
@@ -81,41 +92,113 @@ const Register = () => {
               required
             >
               <MenuItem value="administrador">Administrador de plataforma</MenuItem>
-              <MenuItem value="cliente">Usuario cliente</MenuItem>
+              <MenuItem value="cliente">Cliente (Institución Educativa)</MenuItem>
               <MenuItem value="aportante">Usuario aportante</MenuItem>
             </Select>
           </FormControl>
         </Box>
         <Box mb={2}>
           {role === 'administrador' && (
-            <TextField
-              label="Información adicional (Administrador)"
-              variant="outlined"
-              fullWidth
-              value={additionalInfo}
-              onChange={(e) => setAdditionalInfo(e.target.value)}
-              required
-            />
+            <>
+              <TextField
+                label="Código de Verificación"
+                variant="outlined"
+                fullWidth
+                name="verificationCode"
+                value={additionalInfo.verificationCode || ''}
+                onChange={handleInputChange}
+                required
+              />
+              <TextField
+                label="Número de Teléfono"
+                variant="outlined"
+                fullWidth
+                name="phoneNumber"
+                value={additionalInfo.phoneNumber || ''}
+                onChange={handleInputChange}
+                required
+              />
+            </>
           )}
           {role === 'cliente' && (
-            <TextField
-              label="Información adicional (Cliente)"
-              variant="outlined"
-              fullWidth
-              value={additionalInfo}
-              onChange={(e) => setAdditionalInfo(e.target.value)}
-              required
-            />
+            <>
+              <TextField
+                label="Nombre de la Institución"
+                variant="outlined"
+                fullWidth
+                name="schoolName"
+                value={schoolInfo.schoolName || ''}
+                onChange={handleInputChange}
+                required
+              />
+              <TextField
+                label="CUIT"
+                variant="outlined"
+                fullWidth
+                name="cuit"
+                value={schoolInfo.cuit || ''}
+                onChange={handleInputChange}
+                required
+              />
+              <TextField
+                label="Dirección"
+                variant="outlined"
+                fullWidth
+                name="address"
+                value={schoolInfo.address || ''}
+                onChange={handleInputChange}
+                required
+              />
+              <TextField
+                label="Número de Teléfono"
+                variant="outlined"
+                fullWidth
+                name="phoneNumber"
+                value={schoolInfo.phoneNumber || ''}
+                onChange={handleInputChange}
+                required
+              />
+            </>
           )}
           {role === 'aportante' && (
-            <TextField
-              label="Información adicional (Aportante)"
-              variant="outlined"
-              fullWidth
-              value={additionalInfo}
-              onChange={(e) => setAdditionalInfo(e.target.value)}
-              required
-            />
+            <>
+              <TextField
+                label="Entidad"
+                variant="outlined"
+                fullWidth
+                name="entity"
+                value={additionalInfo.entity || ''}
+                onChange={handleInputChange}
+                required
+              />
+              <TextField
+                label="Nombre y Apellidos de los Hijos"
+                variant="outlined"
+                fullWidth
+                name="childrenNames"
+                value={additionalInfo.childrenNames || ''}
+                onChange={handleInputChange}
+                required
+              />
+              <TextField
+                label="Grados y Turnos de los Hijos"
+                variant="outlined"
+                fullWidth
+                name="gradesAndShifts"
+                value={additionalInfo.gradesAndShifts || ''}
+                onChange={handleInputChange}
+                required
+              />
+              <TextField
+                label="Número de Teléfono"
+                variant="outlined"
+                fullWidth
+                name="phoneNumber"
+                value={additionalInfo.phoneNumber || ''}
+                onChange={handleInputChange}
+                required
+              />
+            </>
           )}
         </Box>
         <Box mb={2}>
