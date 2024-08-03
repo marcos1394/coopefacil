@@ -1,31 +1,20 @@
-// src/pages/SchoolConfigPage.js
-import React, { useState, useEffect } from 'react';
-import SchoolConfig from '../components/SchoolConfig';
+import React, { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import YearSelector from '../components/YearSelector';
+import DashboardPanel from '../components/DashboardPanel';
 
 const SchoolConfigPage = () => {
-  const [schoolData, setSchoolData] = useState(null);
+  const [selectedYear, setSelectedYear] = useState('');
 
-  useEffect(() => {
-    const storedData = localStorage.getItem('schoolData');
-    if (storedData) {
-      setSchoolData(JSON.parse(storedData));
-    }
-  }, []);
-
-  const handleSave = (data) => {
-    setSchoolData(data);
-  };
-
-  if (schoolData) {
-    return (
-      <div>
-        <h1>Escuela Configurada</h1>
-        {/* Aquí puedes mostrar la información de la escuela configurada */}
-      </div>
-    );
-  }
-
-  return <SchoolConfig onSave={handleSave} />;
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" p={3}>
+      <Typography variant="h4" gutterBottom>
+        Configuración de la Escuela
+      </Typography>
+      <YearSelector selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
+      {selectedYear && <DashboardPanel />}
+    </Box>
+  );
 };
 
 export default SchoolConfigPage;

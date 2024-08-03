@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, MenuItem, FormControl, InputLabel, Select, FormControlLabel, Checkbox, Grid } from '@mui/material';
+import { Box, Button, TextField, Typography, MenuItem, FormControl, InputLabel, Select, FormControlLabel, Checkbox, Grid, Avatar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import sendConfirmationEmail from '../utils/email';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import SchoolIcon from '@mui/icons-material/School';
+import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 
 const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('cliente'); // 'administrador', 'cliente', 'aportante'
+  const [role, setRole] = useState(''); // No seleccionar un rol por defecto
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [additionalInfo, setAdditionalInfo] = useState({});
   const [schoolInfo, setSchoolInfo] = useState({});
@@ -41,17 +44,52 @@ const Register = () => {
     const token = Math.random().toString(36).substr(2);
     sendConfirmationEmail(email, token);
     alert('Se ha enviado un correo de confirmación. Por favor, revisa tu email.');
-    navigate('/confirmation');
+    navigate('/login');
+  };
+
+  const getRoleIcon = () => {
+    switch (role) {
+      case 'administrador':
+        return <SupervisorAccountIcon style={{ fontSize: 40 }} />;
+      case 'cliente':
+        return <SchoolIcon style={{ fontSize: 40 }} />;
+      case 'aportante':
+        return <FamilyRestroomIcon style={{ fontSize: 40 }} />;
+      default:
+        return null;
+    }
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh" bgcolor="#f0f2f5" p={3}>
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh" bgcolor="#f0f2f5" p={3}>
       <Typography variant="h4" gutterBottom>
         Registrarse
       </Typography>
+      <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
+        <FormControl fullWidth>
+          <InputLabel>Rol</InputLabel>
+          <Select
+            name="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            required
+          >
+            <MenuItem value="administrador">Administrador de plataforma</MenuItem>
+            <MenuItem value="cliente">Cliente (Institución Educativa)</MenuItem>
+            <MenuItem value="aportante">Usuario aportante</MenuItem>
+          </Select>
+        </FormControl>
+        {getRoleIcon() && (
+          <Box mt={2}>
+            <Avatar style={{ backgroundColor: '#3f51b5' }}>
+              {getRoleIcon()}
+            </Avatar>
+          </Box>
+        )}
+      </Box>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               label="Email"
               variant="outlined"
@@ -61,7 +99,7 @@ const Register = () => {
               required
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               label="Contraseña"
               variant="outlined"
@@ -72,7 +110,7 @@ const Register = () => {
               required
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               label="Confirmar Contraseña"
               variant="outlined"
@@ -82,21 +120,6 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Rol</InputLabel>
-              <Select
-                name="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                required
-              >
-                <MenuItem value="administrador">Administrador de plataforma</MenuItem>
-                <MenuItem value="cliente">Cliente (Institución Educativa)</MenuItem>
-                <MenuItem value="aportante">Usuario aportante</MenuItem>
-              </Select>
-            </FormControl>
           </Grid>
           {role === 'administrador' && (
             <>
