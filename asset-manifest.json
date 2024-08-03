@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/coopefacil/static/css/main.b5b8381d.css",
+    "main.js": "/coopefacil/static/js/main.c494e533.js",
+    "index.html": "/coopefacil/index.html",
+    "main.b5b8381d.css.map": "/coopefacil/static/css/main.b5b8381d.css.map",
+    "main.c494e533.js.map": "/coopefacil/static/js/main.c494e533.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b5b8381d.css",
+    "static/js/main.c494e533.js"
+  ]
+}
